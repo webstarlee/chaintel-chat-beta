@@ -19,11 +19,11 @@ interface ThemeModeProviderProps {
 export const ThemeModeProvider: React.FC<ThemeModeProviderProps> = ({
   children,
 }) => {
-  const [darkmode, setDarkmode] = useState(false);
+  const [darkmode, setDarkmode] = useState(true);
 
   useEffectOnce(() => {
     const dark_mode = sessionStorage.getItem("darkmode") || true;
-    setDarkmode(dark_mode == "true"? true: false || false);
+    setDarkmode(dark_mode == "true"? true: false || true);
   })
 
   const toggleDarkmode = () => {
