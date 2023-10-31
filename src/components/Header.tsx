@@ -20,6 +20,10 @@ const AppBar = styled(MuiAppBar, {
   ...(open && {
     width: `calc(100% - ${drawer_width}px)`,
     marginLeft: `${drawer_width}px`,
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: 0,
+      width: "100%",
+    },
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -39,7 +43,7 @@ const HeaderButton = styled(IconButton)(() => ({
 
 const Header = () => {
   const theme = useTheme();
-  const { sideOpenD, drawerWidth, toggleSideOpenD } = useRoot();
+  const { sideOpenD, drawerWidth, toggleSideOpenD, toggleSideOpenM } = useRoot();
   return (
     <AppBar position="fixed" open={sideOpenD} drawer_width={drawerWidth}>
       <Toolbar>
@@ -49,7 +53,40 @@ const Header = () => {
           onClick={toggleSideOpenD}
           edge="start"
           size="small"
-          sx={{ mr: 2, ...(sideOpenD && { display: "none" }), color: theme.palette.mode == "dark"? "#fff": "#000" }}
+          sx={{
+            mr: 2,
+            display: { xs: "none", sm: "inline-flex" },
+            ...(sideOpenD && { display: "none" }),
+            color: theme.palette.mode == "dark" ? "#fff" : "#000",
+          }}
+        >
+          <svg
+            stroke="currentColor"
+            fill="none"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="icon-sm text-token-text-primary gizmo:text-token-text-tertiary gizmo:hover:text-token-text-secondary"
+            height="1em"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="9" y1="3" x2="9" y2="21"></line>
+          </svg>
+        </HeaderButton>
+        <HeaderButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={toggleSideOpenM}
+          edge="start"
+          size="small"
+          sx={{
+            mr: 2,
+            display: { xs: "inline-flex", sm: "none" },
+            color: theme.palette.mode == "dark" ? "#fff" : "#000",
+          }}
         >
           <svg
             stroke="currentColor"
@@ -70,11 +107,19 @@ const Header = () => {
         <Typography
           variant="subtitle2"
           component="div"
-          sx={{ flex: 1, textAlign: "center", color: theme.palette.mode == "dark"? "#fff": "#000" }}
+          sx={{
+            flex: 1,
+            textAlign: "center",
+            color: theme.palette.mode == "dark" ? "#fff" : "#000",
+          }}
         >
           ChainTel AI Chat
         </Typography>
-        <HeaderButton color="inherit" size="small" sx={{color: theme.palette.mode == "dark"? "#fff": "#000"}}>
+        <HeaderButton
+          color="inherit"
+          size="small"
+          sx={{ color: theme.palette.mode == "dark" ? "#fff" : "#000" }}
+        >
           <svg
             stroke="currentColor"
             fill="none"
